@@ -14,6 +14,9 @@ export interface LatteSubmission {
   score: number;
   feedback: string;
   createdAt: Date;
+  referenceImageUrl?: string;
+  drawingImageUrl?: string;
+  comparisonFeedback?: string;
 }
 
 export enum LattePattern {

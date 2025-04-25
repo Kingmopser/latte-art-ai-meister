@@ -17,6 +17,8 @@ const SubmissionDetail: React.FC<SubmissionDetailProps> = ({ submission }) => {
     return "text-orange-500";
   };
 
+  const hasComparison = submission.drawingImageUrl || submission.referenceImageUrl;
+
   return (
     <Card className="w-full overflow-hidden">
       <div className="aspect-video w-full overflow-hidden bg-muted">
@@ -45,6 +47,52 @@ const SubmissionDetail: React.FC<SubmissionDetailProps> = ({ submission }) => {
             <h3 className="font-medium mb-1">Feedback</h3>
             <p className="text-muted-foreground">{submission.feedback}</p>
           </div>
+
+          {hasComparison && (
+            <div>
+              <h3 className="font-medium mb-1">Comparison Feedback</h3>
+              <p className="text-muted-foreground">{submission.comparisonFeedback}</p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+                {submission.drawingImageUrl && (
+                  <div className="flex flex-col items-center">
+                    <h4 className="text-sm font-medium mb-1">Your Drawing</h4>
+                    <div className="border rounded-md overflow-hidden w-full">
+                      <img 
+                        src={submission.drawingImageUrl} 
+                        alt="Drawing" 
+                        className="w-full h-32 object-contain" 
+                      />
+                    </div>
+                  </div>
+                )}
+                
+                <div className="flex flex-col items-center">
+                  <h4 className="text-sm font-medium mb-1">Your Upload</h4>
+                  <div className="border rounded-md overflow-hidden w-full">
+                    <img 
+                      src={submission.imageUrl} 
+                      alt="Upload" 
+                      className="w-full h-32 object-contain" 
+                    />
+                  </div>
+                </div>
+                
+                {submission.referenceImageUrl && (
+                  <div className="flex flex-col items-center">
+                    <h4 className="text-sm font-medium mb-1">Reference</h4>
+                    <div className="border rounded-md overflow-hidden w-full">
+                      <img 
+                        src={submission.referenceImageUrl} 
+                        alt="Reference" 
+                        className="w-full h-32 object-contain" 
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

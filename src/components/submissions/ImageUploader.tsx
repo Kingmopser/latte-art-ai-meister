@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 
 const ImageUploader: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { uploadImage, isLoading } = useSubmissions();
+  const { uploadImage, isLoading, currentDrawingUrl, currentReferenceUrl } = useSubmissions();
   const { toast } = useToast();
   const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -48,14 +48,16 @@ const ImageUploader: React.FC = () => {
         });
       }, 200);
 
-      const submission = await uploadImage(selectedFile);
+      const submission = await uploadImage(selectedFile, currentDrawingUrl || undefined, currentReferenceUrl || undefined);
       
       clearInterval(interval);
       setUploadProgress(100);
 
+      const hasComparison = currentDrawingUrl || currentReferenceUrl;
+      
       toast({
         title: "Upload successful",
-        description: `Your ${submission.patternType} latte art has been analyzed!`,
+        description: `Your ${submission.patternType} latte art has been analyzed${hasComparison ? " and compared!" : "!"}`
       });
 
       // Reset form after successful upload
